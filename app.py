@@ -1,17 +1,3 @@
-import streamlit as st
-import json
-import os
-from datetime import datetime
-
-# =========================================================
-# PAGE CONFIG
-# =========================================================
-st.set_page_config(
-    page_title="UniQueMarketing - Premium MLM Portal",
-    page_icon="💼",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
 
 # =========================================================
 # FILES
@@ -49,7 +35,6 @@ st.set_page_config(
 # =========================================
 
 if "page" not in st.session_state:
-    st.session_state.page = "home"
     st.session_state.page = "login"
 
 if "user_logged_in" not in st.session_state:
@@ -82,6 +67,8 @@ def save_json(file_path, data):
         json.dump(data, f, indent=4)
 
 def setup_files():
+
+
     default_users = [
         {
             "user_id": "UQM001",
@@ -158,8 +145,56 @@ def generate_user_id(users):
 def find_user(identifier, password):
     users = load_users()
 
-    if not isinstance(users, dict):
+    identifier = str(identifier).strip()
+    password = str(password).strip()
+
+    if not isinstance(users, list):
         return None
+
+    for user in users:
+        if not isinstance(user, dict):
+            continue
+
+        user_id = str(user.get("user_id", "")).strip()
+        username = str(user.get("username", "")).strip()
+        email = str(user.get("email", "")).strip()
+        phone = str(user.get("phone", "")).strip()
+        user_password = str(user.get("password", "")).strip()
+
+        if identifier in [user_id, username, email, phone] and user_password == password:
+            return user
+
+    return None
+
+    for user in users:
+        if not isinstance(user, dict):
+            continue
+
+        user_id = str(user.get("user_id", "")).strip()
+        username = str(user.get("username", "")).strip()
+        email = str(user.get("email", "")).strip()
+        phone = str(user.get("phone", "")).strip()
+        user_password = str(user.get("password", "")).strip()
+
+        if identifier in [user_id, username, email, phone] and user_password == password:
+            return user
+
+    return None
+
+    for user in users:
+        if not isinstance(user, dict):
+            continue
+
+        user_id = str(user.get("user_id", "")).strip()
+        username = str(user.get("username", "")).strip()
+        email = str(user.get("email", "")).strip()
+        phone = str(user.get("phone", "")).strip()
+        user_password = str(user.get("password", "")).strip()
+
+        if identifier in [user_id, username, email, phone] and user_password == password:
+            return user
+
+    return None
 
     identifier = str(identifier).strip()
     password = str(password).strip()
@@ -194,209 +229,58 @@ def update_current_user(updated_user):
 # =========================================================
 def inject_css():
     st.markdown("""
-    <style>
-    :root {
-        --primary: #6d5dfc;
-        --secondary: #8b5cf6;
-        --dark1: #0b1220;
-        --dark2: #16213e;
-        --dark3: #1e2d4a;
-        --card-border: rgba(255,255,255,0.08);
-        --light: #ffffff;
-        --muted: #cbd5e1;
-        --success: #10b981;
-    }
+<style>
+:root {
+    --primary: #6d5dfc;
+    --secondary: #8b5cf6;
+    --dark1: #0b1220;
+    --dark2: #16213e;
+    --dark3: #1e293b;
+}
 
-    .stApp {
-        background: #f3f4f6;
-    }
+/* Full app background + default text */
+html, body, [data-testid="stAppViewContainer"] {
+    background: #ffffff !important;
+    color: #111827 !important;
+}
 
-    section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0f172a 0%, #091226 100%);
-        color: white;
-    }
+/* All general text */
+p, label, span, div, h1, h2, h3, h4, h5, h6 {
+    color: #111827 !important;
+}
 
-    .brand-box {
-        padding: 18px 10px 8px 10px;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        margin-bottom: 10px;
-    }
+/* Input + text fields */
+input, textarea {
+    color: #111827 !important;
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #111827 !important;
+}
 
-    .brand-title {
-        color: #60a5fa;
-        font-size: 20px;
-        font-weight: 800;
-        margin-bottom: 6px;
-    }
+/* Streamlit text input wrapper */
+[data-baseweb="input"] input {
+    color: #111827 !important;
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #111827 !important;
+}
 
-    .brand-sub {
-        color: #cbd5e1;
-        font-size: 12px;
-    }
+/* Placeholder */
+input::placeholder,
+textarea::placeholder {
+    color: #6b7280 !important;
+    opacity: 1 !important;
+}
 
-    .user-box {
-        background: rgba(255,255,255,0.05);
-        border-radius: 14px;
-        padding: 16px;
-        margin: 14px 0 18px 0;
-        text-align: center;
-        border: 1px solid rgba(255,255,255,0.06);
-    }
+/* Buttons */
+button {
+    color: #111827 !important;
+}
 
-    .user-small {
-        color: #cbd5e1;
-        font-size: 12px;
-        margin-bottom: 8px;
-    }
-
-    .user-name {
-        color: #60a5fa;
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 4px;
-    }
-
-    .user-id {
-        color: #cbd5e1;
-        font-size: 12px;
-    }
-
-    .banner {
-        background: linear-gradient(90deg, #6366f1, #8b5cf6);
-        color: white;
-        padding: 22px 28px;
-        border-radius: 18px;
-        font-size: 24px;
-        font-weight: 800;
-        text-align: center;
-        margin-bottom: 26px;
-    }
-
-    .section-title {
-        font-size: 24px;
-        font-weight: 800;
-        color: #0f172a;
-        margin: 8px 0 16px 0;
-    }
-
-    .card {
-        background: linear-gradient(135deg, #16213e, #091a3b);
-        border: 1px solid rgba(255,255,255,0.06);
-        border-radius: 18px;
-        padding: 24px;
-        color: white;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-        min-height: 190px;
-    }
-
-    .metric-card {
-        background: linear-gradient(135deg, #16213e, #091a3b);
-        border: 1px solid rgba(255,255,255,0.06);
-        border-radius: 18px;
-        padding: 22px;
-        color: white;
-        min-height: 170px;
-    }
-
-    .metric-title {
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 24px;
-        color: #e2e8f0;
-    }
-
-    .metric-value {
-        font-size: 28px;
-        font-weight: 900;
-        color: #ffffff;
-        margin-bottom: 8px;
-    }
-
-    .metric-sub {
-        color: #cbd5e1;
-        font-size: 14px;
-    }
-
-    .package-price {
-        font-size: 28px;
-        color: #10b981;
-        font-weight: 800;
-        margin: 10px 0;
-    }
-
-    .stTextInput > div > div > input,
-    .stNumberInput input,
-    .stTextArea textarea,
-    .stSelectbox div[data-baseweb="select"] > div {
-        background: #1e2d4a !important;
-        color: #ffffff !important;
-        border: 1px solid #3b4d6b !important;
-        border-radius: 10px !important;
-    }
-
-    .stTextInput > div > div > input:disabled,
-    .stNumberInput input:disabled,
-    .stTextArea textarea:disabled {
-        color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        opacity: 1 !important;
-        background: #1e2d4a !important;
-    }
-
-    label, .stTextInput label, .stNumberInput label, .stTextArea label {
-        color: #111827 !important;
-        font-weight: 600 !important;
-    }
-
-    input::placeholder, textarea::placeholder {
-        color: #cbd5e1 !important;
-        opacity: 1 !important;
-    }
-
-    .stButton > button {
-        width: 100%;
-        border-radius: 10px !important;
-        font-weight: 700 !important;
-        border: none !important;
-    }
-
-    .login-wrap {
-        max-width: 470px;
-        margin: 50px auto;
-        padding: 30px;
-        background: linear-gradient(135deg, #16213e, #0f3460);
-        border-radius: 18px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-    }
-
-    .login-title {
-        text-align: center;
-        font-size: 34px;
-        font-weight: 800;
-        color: white;
-        margin-bottom: 8px;
-    }
-
-    .login-sub {
-        text-align: center;
-        color: #cbd5e1;
-        margin-bottom: 24px;
-    }
-
-    .small-note {
-        color: #cbd5e1;
-        text-align: center;
-        font-size: 12px;
-        margin-top: 12px;
-    }
-
-    hr {
-        border: none;
-        border-top: 1px solid #d1d5db;
-        margin: 28px 0;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+/* Tabs / radio / misc text */
+.stMarkdown, .stText, .stCaption, .st-emotion-cache-ue6h4q {
+    color: #111827 !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 inject_css()
 
