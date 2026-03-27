@@ -1,35 +1,57 @@
-{
-    "demo_user": {
-        "password": "demo123",
-        "name": "Demo User",
+[
+    {
         "user_id": "UQM001",
+        "username": "demo_user",
+        "name": "Demo User",
         "email": "demo@uniquemarketing.com",
         "phone": "+91-9876543210",
+        "password": "demo123",
         "bank_account": "1234567890",
         "bank_name": "HDFC Bank",
         "account_status": "Active",
         "join_date": "2025-01-15"
     },
-    "user": {
-        "password": "user123",
-        "name": "User Account",
+    {
         "user_id": "UQM003",
+        "username": "user",
+        "name": "User Account",
         "email": "pradhans953@gmail.com",
         "phone": "+91-9000000000",
+        "password": "user123",
+        "bank_account": "",
+        "bank_name": "",
+        "account_status": "Active",
+        "join_date": "2026-03-10",
+        "account_number": "",
+        "ifsc": "",
+        "account_holder": ""
+    },
+    {
+        "user_id": "UQM1002",
+        "username": "abc",
+        "name": "Abc",
+        "email": "pradhans953@gmail.com",
+        "phone": "8697190758",
+        "password": "123456",
         "bank_account": "",
         "bank_name": "",
         "account_status": "Active",
         "join_date": "2026-03-10"
     },
-    "abc": {
-        "password": "123456",
-        "name": "Abc",
-        "user_id": "UQM1002",
-        "email": "pradhans953@gmail.com",
-        "phone": "8697190758",
-        "bank_account": "",
+    {
+        "user_id": "UQM004",
+        "username": "test",
+        "name": "abcd ",
+        "email": "test",
+        "phone": "1234567890",
+        "password": "1234567890",
+        "status": "Active",
+        "join_date": "2026-03-27",
         "bank_name": "",
-        "account_status": "Active",
-        "join_date": "2026-03-10"
+        "account_number": "",
+        "ifsc": "",
+        "account_holder": "",
+        "package": "Free",
+        "wallet": 0
     }
-}
+]
